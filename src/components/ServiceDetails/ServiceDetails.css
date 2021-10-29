@@ -3,3 +3,8 @@
   border: 1px solid black;
   border-radius: 8px;
 }
+.s-details-btn {
+  background-color: rgb(25, 66, 63);
+  padding: 20px 50px !important;
+  border: 3px solid aqua;
+}

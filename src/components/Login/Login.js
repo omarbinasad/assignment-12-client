@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory, useLocation } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import "./Login.css";
 
@@ -12,6 +13,16 @@ const Login = () => {
     handleToggle,
     isLoggedIn,
   } = useAuth();
+  const location = useLocation();
+  const history = useHistory();
+  const redirect_uri = location.state?.from || "/home";
+
+  const handleGoogleLogin = () => {
+    signInUsingGoogle().then((result) => {
+      console.log(result);
+      history.push(redirect_uri);
+    });
+  };
 
   return (
     <div className=" p-5 ">
@@ -68,7 +79,7 @@ const Login = () => {
           <div>
             <h5 className="text-danger">{error}</h5>
           </div>
-          <button type="submit" className=" btn btn-primary">
+          <button type="submit" className="regi-btn btn btn-primary">
             {isLoggedIn ? "Login" : "Register"}
           </button>
         </form>{" "}
@@ -76,7 +87,7 @@ const Login = () => {
         <div>
           <button
             className="g-btn"
-            onClick={signInUsingGoogle}
+            onClick={handleGoogleLogin}
             classNamebtn
             btn-primary
           >

@@ -9,7 +9,7 @@ const About = () => {
           className="container me-5 d-flex align-items-center justify-content-center banner-right img-container
        col-md-6"
         >
-          <img src="https://i.ibb.co/XY66jMf/banner.gif" alt="" />
+          <img src="https://i.ibb.co/B2kgLpx/45056-contact-us-1.gif" alt="" />
         </div>
         <div className="container about-banner-right col-md-6 ">
           <div>
