@@ -85,14 +85,19 @@ const Login = () => {
         </form>{" "}
         <br />
         <div>
-          <button
-            className="g-btn"
-            onClick={handleGoogleLogin}
-            classNamebtn
-            btn-primary
-          >
-            Sign in with Google
-          </button>
+          <div className="d-flex align-items-center">
+            {" "}
+            <button
+              className="g-btn"
+              onClick={handleGoogleLogin}
+              classNamebtn
+              btn-primary
+            >
+              Sign in with Google
+            </button>
+            <span className="text-white ms-2"> ←</span>
+            <h5 className="reco-text text-white p-2 mt-2  ms-2">RECOMMENDED</h5>
+          </div>
         </div>
       </div>
     </div>

@@ -8,14 +8,14 @@ const MyOrders = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/myorders/${user.email}`)
+    fetch(`https://peaceful-everglades-42205.herokuapp.com/myorders/${user.email}`)
       .then((res) => res.json())
       .then((data) => setOrders(data));
   }, []);
 
   // order cancel/delete
   const handleDelete = (id) => {
-    const url = `http://localhost:5000/myorders/${user.email}`;
+    const url = `https://peaceful-everglades-42205.herokuapp.com/myorders/${user.email}`;
     fetch(url, {
       method: "DELETE",
     })

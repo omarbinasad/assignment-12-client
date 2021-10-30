@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import useAuth from "../../../hooks/useAuth";
 import { HashLink } from "react-router-hash-link";
+
 const Header = () => {
   const { user, logOut } = useAuth();
   return (
@@ -45,9 +46,12 @@ const Header = () => {
                 Log Out
               </Button>
             ) : (
-              <Button className="border shadow" variant="white">
+              <Button
+                className="login-btn p-0 border shadow bg-primary "
+                variant="white"
+              >
                 <Nav.Link as={HashLink} to="/login">
-                  <h5>Login</h5>
+                  <h6 className="pt-2 px-3 text-white">Login</h6>
                 </Nav.Link>
               </Button>
             )}

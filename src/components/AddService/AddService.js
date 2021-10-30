@@ -7,13 +7,15 @@ const AddService = () => {
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    axios.post("http://localhost:5000/services", data).then((res) => {
-      if (res.data.insertedId) {
-        alert("added successfully");
-        reset();
-      }
-      console.log(res);
-    });
+    axios
+      .post("https://peaceful-everglades-42205.herokuapp.com/services", data)
+      .then((res) => {
+        if (res.data.insertedId) {
+          alert("added successfully");
+          reset();
+        }
+        console.log(res);
+      });
   };
 
   return (
