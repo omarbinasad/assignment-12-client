@@ -47,6 +47,9 @@ button {
   font-family: inherit;
   font-size: initial;
 }
+.contact-text-area {
+  width: 100% !important;
+}
 .form-group label {
   margin: 2rem 0 0.5rem 0;
 }

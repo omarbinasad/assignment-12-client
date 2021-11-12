@@ -1,16 +1,20 @@
 import React from "react";
-import AboutUs from "./AboutUs/AboutUs";
+import Reviews from "./Reviews/Reviews";
 import Banner from "./Banner/Banner";
-import Destinations from "./Destinations/Destinations";
-import Services from "./Services/Services";
+import Products from "./Products/Products";
+import DroneShoots from "./DroneShoots/DroneShoots";
+import Header from "../Shared/Header/Header";
+import Footer from "../Shared/Footer/Footer";
 
 const Home = () => {
   return (
     <div id="home">
+      <Header></Header>
       <Banner></Banner>
-      <Services></Services>
-      <AboutUs></AboutUs>
-      <Destinations></Destinations>
+      <Products></Products>
+      <Reviews></Reviews>
+      <DroneShoots></DroneShoots>
+      <Footer></Footer>
     </div>
   );
 };

@@ -1,77 +1,92 @@
+import { useState, useEffect } from "react";
 import {
   getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
+  getIdToken,
+  signOut,
 } from "firebase/auth";
-import { useEffect, useState } from "react";
-import initializeAuthentication from "../components/Login/firebase/firebase.init";
+import initializeFirebase from "../components/Login/firebase/firebase.init";
 
-initializeAuthentication();
-
+// initialize firebase app
+initializeFirebase();
 const useFirebase = () => {
   const [user, setUser] = useState({});
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const [isLoading, setIsLoading] = useState(true);
+  const [authError, setAuthError] = useState("");
+  const [admin, setAdmin] = useState(false);
+  const [token, setToken] = useState("");
+
   const auth = getAuth();
+  const googleProvider = new GoogleAuthProvider();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePassChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleRegi = (e) => {
-    e.preventDefault();
-    if (password.length < 6) {
-      setError("Password Should be at least 6 characters long");
-      return;
-    }
-
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((result) => {
-        const user = result.user;
-        setError("");
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
-    signInWithEmailAndPassword(auth, email, password)
-      .then((result) => {
-        const user = result.user;
-        setError("");
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
-
-    console.log(email, password);
-  };
-
-  // Toggle handler function
-  const handleToggle = (e) => {
-    setIsLoggedIn(e.target.checked);
-  };
-
-  const signInUsingGoogle = () => {
-    
+  const registerUser = (email, password, name, history) => {
     setIsLoading(true);
-    const googleProvider = new GoogleAuthProvider();
-    return signInWithPopup(auth, googleProvider);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setAuthError("");
+        const newUser = { email, displayName: name };
+        setUser(newUser);
+        // save user to the database
+        saveUser(email, name, "POST");
+        // send name to firebase after creation
+        updateProfile(auth.currentUser, {
+          displayName: name,
+        })
+          .then(() => {})
+          .catch((error) => {});
+        history.replace("/");
+      })
+      .catch((error) => {
+        setAuthError(error.message);
+        console.log(error);
+      })
+      .finally(() => setIsLoading(false));
   };
 
+  const loginUser = (email, password, location, history) => {
+    setIsLoading(true);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const destination = location?.state?.from || "/";
+        history.replace(destination);
+        setAuthError("");
+      })
+      .catch((error) => {
+        setAuthError(error.message);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  const signInWithGoogle = (location, history) => {
+    setIsLoading(true);
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const user = result.user;
+        saveUser(user.email, user.displayName, "PUT");
+
+        setAuthError("");
+        const destination = location?.state?.from || "/";
+        history.replace(destination);
+      })
+      .catch((error) => {
+        setAuthError(error.message);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  // observer user state
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        getIdToken(user).then((idToken) => {
+          setToken(idToken);
+        });
       } else {
         setUser({});
       }
@@ -80,24 +95,55 @@ const useFirebase = () => {
     return () => unsubscribed;
   }, []);
 
-  const logOut = () => {
+  useEffect(() => {
+    fetch(`https://peaceful-everglades-42205.herokuapp.com/users/${user.email}`)
+      .then((res) => res.json())
+      .then((data) => setAdmin(data.admin));
+  }, [user.email]);
+
+  const logout = () => {
     setIsLoading(true);
     signOut(auth)
-      .then(() => {})
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      })
       .finally(() => setIsLoading(false));
   };
 
+  const saveUser = (email, displayName, method) => {
+    const user = { email, displayName };
+    fetch("https://peaceful-everglades-42205.herokuapp.com/users", {
+      method: method,
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    }).then();
+  };
+  // const saveUser = (email, displayName, method) => {
+  //   const user = { email, displayName };
+  //   fetch("https://peaceful-everglades-42205.herokuapp.com/users", {
+  //     method: method,
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify(user),
+  //   }).then();
+  // };
+
   return {
     user,
-    handleEmailChange,
-    handlePassChange,
-    handleRegi,
+    admin,
+    token,
     isLoading,
-    isLoggedIn,
-    handleToggle,
-    signInUsingGoogle,
-    logOut,
-    error,
+    authError,
+    registerUser,
+    loginUser,
+    signInWithGoogle,
+    logout,
   };
 };
 

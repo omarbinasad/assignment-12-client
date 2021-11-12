@@ -1,0 +1,10 @@
+.nav-logo {
+  color: white;
+  text-shadow: 0px 1px 3px black, 0px -1px 2px black;
+  letter-spacing: 1.5px;
+}
+
+.nav-menu h6 {
+  font-size: 1.3em !important;
+  color: black !important;
+}

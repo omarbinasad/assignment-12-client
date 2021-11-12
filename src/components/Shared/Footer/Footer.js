@@ -7,12 +7,7 @@ const Footer = () => {
   return (
     <div>
       <footer className="footer">
-        <div className="waves">
-          <div className="wave" id="wave1"></div>
-          <div className="wave" id="wave2"></div>
-          <div className="wave" id="wave3"></div>
-          <div className="wave" id="wave4"></div>
-        </div>
+        <div className="waves"></div>
 
         <ul className="menu">
           <li className="menu__item">
@@ -21,15 +16,12 @@ const Footer = () => {
             </Nav.Link>
           </li>
           <li class="menu__item">
-            <Nav.Link as={HashLink} to="/about">
-              <p>About Us</p>
+            {" "}
+            <Nav.Link as={HashLink} to="/allproducts">
+              <p>Explore</p>
             </Nav.Link>
           </li>
-          <li className="menu__item">
-            <Nav.Link as={HashLink} to="/home#services">
-              <p>Services</p>
-            </Nav.Link>
-          </li>
+
           <li className="menu__item">
             <Nav.Link as={HashLink} to="/contact">
               <p>Contact</p>

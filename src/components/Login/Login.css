@@ -1,7 +1,6 @@
 .login-container {
   display: flex;
   flex-direction: column;
-
   max-width: 50% !important;
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.562);
@@ -23,9 +22,4 @@
 }
 .regi-btn {
   box-shadow: 2px 5px 5px rgba(19, 19, 19, 0.548);
-}
-
-.reco-text {
-  border-top: 1px solid aqua;
-  border-bottom: 1px solid aqua;
 }

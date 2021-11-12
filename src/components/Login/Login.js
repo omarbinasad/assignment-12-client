@@ -1,106 +1,109 @@
-import React from "react";
-import { useHistory, useLocation } from "react-router";
+import {
+  Container,
+  TextField,
+  Button,
+  CircularProgress,
+  Alert,
+} from "@mui/material";
+import React, { useState } from "react";
+import { Grid } from "@mui/material";
+
+import { NavLink, useLocation, useHistory } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import "./Login.css";
 
 const Login = () => {
-  const {
-    signInUsingGoogle,
-    handleEmailChange,
-    handlePassChange,
-    handleRegi,
-    error,
-    handleToggle,
-    isLoggedIn,
-  } = useAuth();
+  const [loginData, setLoginData] = useState({});
+  const { user, loginUser, signInWithGoogle, isLoading, authError } = useAuth();
+
   const location = useLocation();
   const history = useHistory();
-  const redirect_uri = location.state?.from || "/home";
 
-  const handleGoogleLogin = () => {
-    signInUsingGoogle().then((result) => {
-      console.log(result);
-      history.push(redirect_uri);
-    });
+  const handleOnChange = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+    const newLoginData = { ...loginData };
+    newLoginData[field] = value;
+    setLoginData(newLoginData);
+  };
+  const handleLoginSubmit = (e) => {
+    loginUser(loginData.email, loginData.password, location, history);
+    e.preventDefault();
   };
 
+  const handleGoogleSignIn = () => {
+    signInWithGoogle(location, history);
+  };
   return (
-    <div className=" p-5 ">
-      <div className=" login-container p-5 container">
-        {" "}
-        <h2 className=" py-5 text-white">
-          Please {isLoggedIn ? "Login" : "Register"}
-        </h2>
-        <form onSubmit={handleRegi}>
-          <div className="row mb-3">
-            <div className="col-sm-10">
-              <input
-                onBlur={handleEmailChange}
-                type="email"
-                className="form-control"
-                id="inputEmail3"
-                placeholder="Email"
-                required
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-sm-10">
-              <input
-                onBlur={handlePassChange}
-                placeholder="Password"
-                type="password"
-                className=" form-control"
-                id="inputPassword3"
-                required
-              />
-            </div>
-          </div>
+    <Container className="login-container">
+      <Grid container spacing={2}>
+        <Grid item sx={{ mt: 8 }} xs={12} md={12}>
+          <h2 className="text-white mb-5"> Login</h2>
 
-          <div className="row mb-3">
-            <div className="col-sm-10 offset-sm-2">
-              <div className="form-check">
-                <input
-                  onChange={handleToggle}
-                  className="form-check-input"
-                  type="checkbox"
-                  id="gridCheck1"
-                />
-                <label
-                  className="fs-6s
-                text-white  form-check-label"
-                  htmlFor="gridCheck1"
-                >
-                  Already Registered
-                </label>
-              </div>
-            </div>
+          <div className="">
+            <form onSubmit={handleLoginSubmit}>
+              <TextField
+                sx={{
+                  backgroundColor: "white",
+                  borderRadius: "5px",
+                  borderBottom: "1px solid white",
+                  width: "75%",
+                  m: 1,
+                  color: "white",
+                }}
+                id="standard-basic"
+                label="Your Email"
+                name="email"
+                onChange={handleOnChange}
+                variant="standard"
+              />
+              <TextField
+                sx={{
+                  backgroundColor: "white",
+                  borderRadius: "5px",
+
+                  borderBottom: "1px solid white",
+                  width: "75%",
+                  m: 1,
+                  color: "white",
+                }}
+                id="standard-basic"
+                label="Your Password"
+                type="password"
+                name="password"
+                onChange={handleOnChange}
+                variant="standard"
+              />
+
+              <Button
+                sx={{ width: "75%", m: 1 }}
+                type="submit"
+                variant="contained"
+              >
+                Login
+              </Button>
+              <NavLink style={{ textDecoration: "none" }} to="/register">
+                <br />
+                <Button variant="text">
+                  <h5 style={{ textShadow: "1px 2px 3px black" }}>
+                    {" "}
+                    New User? Please Register
+                  </h5>
+                </Button>
+              </NavLink>
+              {isLoading && <CircularProgress />}
+              {user?.email && (
+                <Alert severity="success">Login successfully!</Alert>
+              )}
+              {authError && <Alert severity="error">{authError}</Alert>}
+            </form>
           </div>
-          <div>
-            <h5 className="text-danger">{error}</h5>
-          </div>
-          <button type="submit" className="regi-btn btn btn-primary">
-            {isLoggedIn ? "Login" : "Register"}
-          </button>
-        </form>{" "}
-        <br />
-        <div>
-          <div className="d-flex align-items-center">
-            {" "}
-            <button
-              className="g-btn"
-              onClick={handleGoogleLogin}
-              classNamebtn
-              btn-primary
-            >
-              Sign in with Google
-            </button>
-            <span className="text-white ms-2"> ←</span>
-            <h5 className="reco-text text-white p-2 mt-2  ms-2">RECOMMENDED</h5>
-          </div>
-        </div>
-      </div>
-    </div>
+          <p>------------------------</p>
+          <Button onClick={handleGoogleSignIn} variant="contained">
+            Google Sign In
+          </Button>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

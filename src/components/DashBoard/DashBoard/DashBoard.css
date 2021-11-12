@@ -1,0 +1,14 @@
+.dashboard-container {
+  overflow-x: hidden;
+
+  background-color: #0000008e;
+  background-image: url("https://cdn.pixabay.com/photo/2017/08/02/23/28/mountain-2574006_960_720.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-blend-mode: color;
+  height: 100vh !important;
+}
+.drawer-container {
+  color: white;
+  background-color: #07102f !important;
+}

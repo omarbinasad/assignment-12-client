@@ -1,18 +1,16 @@
-.banner-right > img {
-  width: 100%;
-  border-radius: 50%;
+.aboutus-sec-img {
+  background-color: aqua !important;
+  border-radius: 5% !important;
+  width: 70% !important;
 }
-.banner-left > h1 {
-  color: rgb(255, 255, 255);
-  font-size: 6rem;
-  letter-spacing: 3px;
-  justify-content: center;
-  text-shadow: 1px 2px 2px black;
+.reviews-main-container {
+  margin-top: 50px !important;
 }
-
-.banner-container {
+.reviews-container {
+  min-height: 65vh !important;
+  /* max-height: 100vh !important; */
   margin-bottom: 50px;
-  height: 85vh;
+
   border: 1px solid rgb(218, 218, 218);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);

@@ -2,24 +2,24 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/Home/Home";
 import NotFound from "./components/NotFound/NotFound";
-import ServiceDetails from "./components/ServiceDetails/ServiceDetails";
 import Login from "./components/Login/Login";
-import Header from "./components/Shared/Header/Header";
+// import Header from "./components/Shared/Header/Header";
 import AuthProvider from "./context/AuthProvider";
 import PrivateRoute from "./components/Login/PrivateRoute/PrivateRoute";
-import Footer from "./components/Shared/Footer/Footer";
+// import Footer from "./components/Shared/Footer/Footer";
 import Contact from "./components/Contact/Contact";
-import About from "./components/About/About";
-import AddService from "./components/AddService/AddService";
-import ManageSercices from "./components/ManageServices/ManageServices";
-import MyOrders from "./components/MyOrders/MyOrders";
+import AllProducts from "./components/AllProducts/AllProducts";
+// import ManageProducts from "./components/ManageServices/ManageProducts";
+import Purchase from "./components/Purchase/Purchase";
+import DashBoard from "./components/DashBoard/DashBoard/DashBoard";
+import Register from "./components/Login/Register/Register";
 
 function App() {
   return (
     <div className="">
       <AuthProvider>
         <Router>
-          <Header></Header>
+          {/* <Header></Header> */}
           <Switch>
             <Route exact path="/">
               <Home></Home>
@@ -27,11 +27,14 @@ function App() {
             <Route path="/home">
               <Home></Home>
             </Route>
-            <Route path="/about">
-              <About></About>
+            <Route path="/allproducts">
+              <AllProducts></AllProducts>
             </Route>
-            <PrivateRoute path="/service/:serviceId">
-              <ServiceDetails></ServiceDetails>
+            {/* <Route path="/addreview">
+              <AddReview></AddReview>
+            </Route> */}
+            <PrivateRoute path="/product/:productId">
+              <Purchase></Purchase>
             </PrivateRoute>
             <Route path="/contact">
               <Contact></Contact>
@@ -39,20 +42,26 @@ function App() {
             <Route path="/login">
               <Login></Login>
             </Route>
-            <PrivateRoute path="/myorders">
+            <Route path="/register">
+              <Register></Register>
+            </Route>
+            {/* <PrivateRoute path="/myorders">
               <MyOrders></MyOrders>
+            </PrivateRoute> */}
+            <PrivateRoute path="/dashboard">
+              <DashBoard></DashBoard>
             </PrivateRoute>
-            <PrivateRoute path="/addservice">
-              <AddService></AddService>
-            </PrivateRoute>
-            <PrivateRoute path="/manageservices">
-              <ManageSercices></ManageSercices>
-            </PrivateRoute>
+            {/* <PrivateRoute path="/addproduct">
+              <AddProduct></AddProduct>
+            </PrivateRoute> */}
+            {/* <PrivateRoute path="/manageproducts">
+              <ManageProducts></ManageProducts>
+            </PrivateRoute> */}
             <Route path="*">
               <NotFound></NotFound>
             </Route>
           </Switch>
-          <Footer></Footer>
+          {/* <Footer></Footer> */}
         </Router>
       </AuthProvider>
     </div>
