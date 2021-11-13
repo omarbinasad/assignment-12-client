@@ -52,11 +52,8 @@ function Dashboard(props) {
 
       <div className="ps-4">
         <li className="mt-4">
-          <Link
-            className="me-2 text-decoration-none fs-5 text-white"
-            to={`${url}`}
-          >
-            Dashboard{" "}
+          <Link className="me-2 text-decoration-none fs-5 text-white" to="/">
+            Home{" "}
           </Link>
         </li>
         {admin && (

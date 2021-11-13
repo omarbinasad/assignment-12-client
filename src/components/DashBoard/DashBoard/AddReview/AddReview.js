@@ -20,8 +20,9 @@ const AddReview = () => {
     <div className="add-service-container">
       <h2>Add Review</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <textarea placeholder="review" {...register("review")} />
+        <textarea required placeholder="review" {...register("review")} />
         <input
+          required
           type="number"
           max="5"
           min="1"
