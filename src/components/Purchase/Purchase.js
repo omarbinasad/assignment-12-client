@@ -108,6 +108,7 @@ const Purchase = () => {
                     required: true,
                   })}
                 />
+
                 <input
                   className="p-default-value"
                   defaultValue={data.img}
@@ -116,6 +117,7 @@ const Purchase = () => {
                     required: true,
                   })}
                 />
+
                 <input
                   placeholder="First Name"
                   {...register("firstname", {
